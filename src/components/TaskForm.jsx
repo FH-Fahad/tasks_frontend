@@ -22,14 +22,17 @@ const TaskForm = () => {
 
     const task = { title, description, completed };
 
-    const response = await fetch("/api/tasks", {
-      method: "POST",
-      body: JSON.stringify(task),
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      "https://tasks-backend-one.vercel.app/api/tasks",
+      {
+        method: "POST",
+        body: JSON.stringify(task),
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
     const data = await response.json();
 

@@ -17,13 +17,16 @@ export const useSignup = () => {
       return;
     }
 
-    const response = await fetch("/api/user/signup", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await fetch(
+      "https://tasks-backend-one.vercel.app/api/user/signup",
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      }
+    );
 
     const data = await response.json();
 
