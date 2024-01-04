@@ -44,10 +44,11 @@ const Home = () => {
       <TaskForm />
       <div className="tasks">
         {loading && <p className="empty">Loading...</p>}
-        {!loading && tasks.length === 0 && (
+        {!loading && tasks && tasks.length === 0 && (
           <p className="empty">No tasks yet!</p>
         )}
         {!loading &&
+          tasks &&
           tasks.map((task) => <TaskDetails key={task._id} task={task} />)}
       </div>
     </div>
