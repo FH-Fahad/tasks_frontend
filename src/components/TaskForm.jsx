@@ -54,6 +54,12 @@ const TaskForm = () => {
     }
   };
 
+  const handleError = () => {
+    setTimeout(() => {
+      setError(null);
+    }, 3000);
+  };
+
   return (
     <form className="create" onSubmit={handleSubmit}>
       <h2>Create New Task</h2>
@@ -74,7 +80,11 @@ const TaskForm = () => {
       <button disabled={loading} className="button">
         {loading ? "Creating Task..." : "Create Task"}
       </button>
-      {error && <p className="error">{error}</p>}
+      {error && (
+        <p className="error" onClick={() => handleError}>
+          {error}
+        </p>
+      )}
     </form>
   );
 };

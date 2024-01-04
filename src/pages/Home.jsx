@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTaskContext } from "../hooks/useTaskContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
@@ -8,52 +8,47 @@ import TaskForm from "../components/TaskForm";
 const Home = () => {
   const { user } = useAuthContext();
   const { tasks, dispatch } = useTaskContext();
+  const [loading, setLoading] = useState(false);
 
-  useEffect(
-    () => async () => {
-      const getTasks = async () => {
-        if (!user) return;
+  useEffect(() => {
+    const getTasks = async () => {
+      if (!user) return;
 
-        const response = await fetch(
-          "https://tasks-backend-one.vercel.app/api/tasks",
-          {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          }
-        );
+      setLoading(true);
 
-        const data = await response.json();
-
-        if (response.ok) {
-          dispatch({ type: "SET_TASKS", payload: data });
+      const response = await fetch(
+        "https://tasks-backend-one.vercel.app/api/tasks",
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
         }
-      };
+      );
 
-      if (user) {
-        await getTasks();
+      const data = await response.json();
+
+      if (response.ok) {
+        setLoading(false);
+        dispatch({ type: "SET_TASKS", payload: data });
       }
-    },
-    [user, dispatch]
-  );
+    };
+
+    if (user) {
+      setLoading(true);
+      getTasks();
+    }
+  }, [user, dispatch]);
 
   return (
-    // <div className="home pages">
-    //   <TaskForm />
-    //   <div className="tasks">
-    //     {tasks.map((task) => (
-    //       <TaskDetails key={task._id} task={task} />
-    //     ))}
-    //   </div>
-    // </div>
-
     <div className="home pages">
       <TaskForm />
       <div className="tasks">
-        {tasks.length === 0 && <p className="empty">No tasks yet!</p>}
-        {tasks.map((task) => (
-          <TaskDetails key={task._id} task={task} />
-        ))}
+        {loading && <p className="empty">Loading...</p>}
+        {!loading && tasks.length === 0 && (
+          <p className="empty">No tasks yet!</p>
+        )}
+        {!loading &&
+          tasks.map((task) => <TaskDetails key={task._id} task={task} />)}
       </div>
     </div>
   );
