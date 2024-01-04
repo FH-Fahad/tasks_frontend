@@ -28,16 +28,13 @@ const TaskDetails = ({ task }) => {
     if (!user) return;
 
     try {
-      const response = await fetch(
-        `https://tasks-backend-one.vercel.app/api/tasks/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
       const data = await response.json();
 
@@ -62,17 +59,14 @@ const TaskDetails = ({ task }) => {
     dispatch({ type: "COMPLETE_TASK", payload: updatedTask });
 
     try {
-      const response = await fetch(
-        `https://tasks-backend-one.vercel.app/api/tasks/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-          body: JSON.stringify({ completed: !task.completed }),
-        }
-      );
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ completed: !task.completed }),
+      });
 
       const data = await response.json();
 
