@@ -11,6 +11,7 @@ const TaskForm = () => {
   const [description, setDescription] = useState("");
   const [completed, setCompleted] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +20,8 @@ const TaskForm = () => {
       setError("You must be logged in to create a task");
       return;
     }
+
+    setLoading(true);
 
     const task = { title, description, completed };
 
@@ -38,6 +41,7 @@ const TaskForm = () => {
 
     if (!response.ok) {
       setError(data.message);
+      setLoading(false);
     }
 
     if (response.ok) {
@@ -45,6 +49,7 @@ const TaskForm = () => {
       setDescription("");
       setCompleted(false);
       setError(null);
+      setLoading(false);
       dispatch({ type: "ADD_TASK", payload: data });
     }
   };
@@ -66,7 +71,9 @@ const TaskForm = () => {
         placeholder="Description"
         onChange={(e) => setDescription(e.target.value)}
       />
-      <button className="button">Create Task</button>
+      <button disabled={loading} className="button">
+        {loading ? "Creating Task..." : "Create Task"}
+      </button>
       {error && <p className="error">{error}</p>}
     </form>
   );

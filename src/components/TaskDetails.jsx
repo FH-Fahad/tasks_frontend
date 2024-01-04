@@ -10,6 +10,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 const TaskDetails = ({ task }) => {
   const { dispatch } = useTaskContext();
   const { user } = useAuthContext();
+  const [loading, setLoading] = useState(false);
   const [timeAgo, setTimeAgo] = useState(
     formatDistanceToNow(new Date(task.createdAt), { addSuffix: true })
   );
@@ -27,6 +28,8 @@ const TaskDetails = ({ task }) => {
   const handleDelete = async (id) => {
     if (!user) return;
 
+    setLoading(true);
+
     try {
       const response = await fetch(
         `https://tasks-backend-one.vercel.app/api/tasks/${id}`,
@@ -42,11 +45,14 @@ const TaskDetails = ({ task }) => {
       const data = await response.json();
 
       if (response.ok) {
+        setLoading(false);
         dispatch({ type: "DELETE_TASK", payload: data });
       } else {
+        setLoading(false);
         console.error("Failed to delete task on the server:", data.error);
       }
     } catch (error) {
+      setLoading(false);
       console.error("An unexpected error occurred:", error);
     }
   };
@@ -96,15 +102,16 @@ const TaskDetails = ({ task }) => {
           className={`completebutton ${task.completed ? "" : "deletebutton"}`}
           onClick={() => handleComplete(task._id)}
         >
-          {task.completed ? "Completed" : " Not Complete"}
+          {task.completed ? "Complete" : " Not Complete Yet"}
         </button>
 
         {user && (
           <button
+            disabled={loading}
             className="deletebutton"
             onClick={() => handleDelete(task._id)}
           >
-            Delete
+            {loading ? "Deleting..." : "Delete"}
           </button>
         )}
       </div>
