@@ -15,7 +15,7 @@ function App() {
       <Navbar />
       <div>
         <Routes>
-          <Route path="/" element={user && <Home />} />
+          <Route path="/" element={user ? <Home /> : <NotLoggedIn />} />
           <Route
             path="/login"
             element={user ? <Navigate to="/" /> : <Login />}
@@ -27,6 +27,14 @@ function App() {
         </Routes>
       </div>
     </>
+  );
+}
+
+function NotLoggedIn() {
+  return (
+    <div className="notLoggedIn">
+      <h1>Login to view your tasks.</h1>
+    </div>
   );
 }
 
