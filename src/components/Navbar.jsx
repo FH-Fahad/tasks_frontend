@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <header>
       <div className="container">
-        <Link to="https://tasks-frontend-eight.vercel.app/">
+        <Link to="/">
           <h1>Tasks</h1>
         </Link>
         <nav>

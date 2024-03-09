@@ -35,16 +35,13 @@ const TaskDetails = ({ task }) => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        `https://tasks-backend-one.vercel.app/api/tasks/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
       const data = await response.json();
 
@@ -72,17 +69,14 @@ const TaskDetails = ({ task }) => {
     dispatch({ type: "COMPLETE_TASK", payload: updatedTask });
 
     try {
-      const response = await fetch(
-        `https://tasks-backend-one.vercel.app/api/tasks/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-          body: JSON.stringify({ completed: !task.completed }),
-        }
-      );
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ completed: !task.completed }),
+      });
 
       const data = await response.json();
 
@@ -99,11 +93,11 @@ const TaskDetails = ({ task }) => {
   return (
     <div className="task-details">
       <h2 className={task.completed ? "done" : ""}>{task.title}</h2>
+      <span>{timeAgo}</span>
       <div className="description">
         {descriptionLines.map((line, index) => (
           <p key={index}>{line}</p>
         ))}
-        <span>{timeAgo}</span>
       </div>
       <div className="align">
         <button

@@ -25,17 +25,14 @@ const TaskForm = () => {
 
     const task = { title, description: JSON.stringify(description), completed };
 
-    const response = await fetch(
-      "https://tasks-backend-one.vercel.app/api/tasks",
-      {
-        method: "POST",
-        body: JSON.stringify(task),
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
+    const response = await fetch("/api/tasks", {
+      method: "POST",
+      body: JSON.stringify(task),
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
 
     const data = await response.json();
 
@@ -60,6 +57,12 @@ const TaskForm = () => {
     }, 3000);
   };
 
+  const resizeTextArea = () => {
+    const textarea = document.getElementById("description");
+    textarea.style.height = "";
+    textarea.style.height = Math.min(textarea.scrollHeight, 300) + "px";
+  };
+
   return (
     <form className="create" onSubmit={handleSubmit}>
       <h2>Create New Task</h2>
@@ -81,6 +84,7 @@ const TaskForm = () => {
         value={description}
         placeholder="Description"
         onChange={(e) => setDescription(e.target.value)}
+        onInput={resizeTextArea}
       />
       <button disabled={loading} className="button">
         {loading ? "Creating Task..." : "Create Task"}
