@@ -8,6 +8,10 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 // eslint-disable-next-line react/prop-types
 const TaskDetails = ({ task }) => {
+  const parsedDescription = JSON.parse(task.description);
+
+  const descriptionLines = parsedDescription.split("\n");
+
   const { dispatch } = useTaskContext();
   const { user } = useAuthContext();
   const [loading, setLoading] = useState(false);
@@ -95,14 +99,18 @@ const TaskDetails = ({ task }) => {
   return (
     <div className="task-details">
       <h2 className={task.completed ? "done" : ""}>{task.title}</h2>
-      <p>{task.description}</p>
-      <span>{timeAgo}</span>
+      <div className="description">
+        {descriptionLines.map((line, index) => (
+          <p key={index}>{line}</p>
+        ))}
+        <span>{timeAgo}</span>
+      </div>
       <div className="align">
         <button
           className={`completebutton ${task.completed ? "" : "deletebutton"}`}
           onClick={() => handleComplete(task._id)}
         >
-          {task.completed ? "Complete" : " Not Complete Yet"}
+          {task.completed ? "Completed" : " Not Complete Yet"}
         </button>
 
         {user && (

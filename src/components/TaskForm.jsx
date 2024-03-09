@@ -23,7 +23,7 @@ const TaskForm = () => {
 
     setLoading(true);
 
-    const task = { title, description, completed };
+    const task = { title, description: JSON.stringify(description), completed };
 
     const response = await fetch(
       "https://tasks-backend-one.vercel.app/api/tasks",
@@ -63,6 +63,11 @@ const TaskForm = () => {
   return (
     <form className="create" onSubmit={handleSubmit}>
       <h2>Create New Task</h2>
+      {error && (
+        <p className="error" onClick={() => handleError}>
+          {error}
+        </p>
+      )}
       <input
         type="text"
         id="title"
@@ -80,11 +85,6 @@ const TaskForm = () => {
       <button disabled={loading} className="button">
         {loading ? "Creating Task..." : "Create Task"}
       </button>
-      {error && (
-        <p className="error" onClick={() => handleError}>
-          {error}
-        </p>
-      )}
     </form>
   );
 };
