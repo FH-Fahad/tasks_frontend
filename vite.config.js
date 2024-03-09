@@ -7,8 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        // target: "https://tasks-backend-one.vercel.app",
-        target: "http://localhost:4000",
+        target: "https://tasks-backend-one.vercel.app",
+        // target: "http://localhost:4000",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "/api/"),
       },
