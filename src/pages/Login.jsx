@@ -9,6 +9,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!email || !password) {
+      return alert("Please fill out all fields");
+    }
+
     await login(email, password);
   };
 

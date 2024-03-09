@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useTaskContext } from "../hooks/useTaskContext";
 
+import BASE_URL from "../../apiConfig";
+
 const TaskForm = () => {
   const { dispatch } = useTaskContext();
   const { user } = useAuthContext();
@@ -25,17 +27,14 @@ const TaskForm = () => {
 
     const task = { title, description: JSON.stringify(description), completed };
 
-    const response = await fetch(
-      "https://tasks-backend-one.vercel.app/api/tasks",
-      {
-        method: "POST",
-        body: JSON.stringify(task),
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
+    const response = await fetch(`${BASE_URL}/api/tasks`, {
+      method: "POST",
+      body: JSON.stringify(task),
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
 
     const data = await response.json();
 

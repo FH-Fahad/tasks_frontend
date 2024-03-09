@@ -2,6 +2,8 @@
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useTaskContext } from "../hooks/useTaskContext";
 
+import BASE_URL from "../../apiConfig";
+
 import { useEffect, useState } from "react";
 
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
@@ -36,7 +38,7 @@ const TaskDetails = ({ task }) => {
 
     try {
       const response = await fetch(
-        `https://tasks-backend-one.vercel.app/api/tasks/${id}`,
+        `${BASE_URL}/api/tasks/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -72,17 +74,14 @@ const TaskDetails = ({ task }) => {
     dispatch({ type: "COMPLETE_TASK", payload: updatedTask });
 
     try {
-      const response = await fetch(
-        `https://tasks-backend-one.vercel.app/api/tasks/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-          body: JSON.stringify({ completed: !task.completed }),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/tasks/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ completed: !task.completed }),
+      });
 
       const data = await response.json();
 

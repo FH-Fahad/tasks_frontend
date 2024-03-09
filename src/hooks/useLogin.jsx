@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
+import BASE_URL from "../../apiConfig";
+
 export const useLogin = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
@@ -11,16 +13,13 @@ export const useLogin = () => {
     setLoading(true);
     setError(null);
 
-    const response = await fetch(
-      "https://tasks-backend-one.vercel.app/api/user/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      }
-    );
+    const response = await fetch(`${BASE_URL}/api/user/login`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
     const data = await response.json();
 

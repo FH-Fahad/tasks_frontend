@@ -5,6 +5,8 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import TaskDetails from "../components/TaskDetails";
 import TaskForm from "../components/TaskForm";
 
+import BASE_URL from "../../apiConfig";
+
 const Home = () => {
   const { user } = useAuthContext();
   const { tasks, dispatch } = useTaskContext();
@@ -16,14 +18,11 @@ const Home = () => {
 
       setLoading(true);
 
-      const response = await fetch(
-        "https://tasks-backend-one.vercel.app/api/tasks",
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/tasks`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
       const data = await response.json();
 
