@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useTaskContext } from "../hooks/useTaskContext";
 
-import BASE_URL from "../../apiConfig";
+import BASE_URL from "./../server/api/apiConfig";
 
 const TaskForm = () => {
   const { dispatch } = useTaskContext();
@@ -14,6 +14,30 @@ const TaskForm = () => {
   const [completed, setCompleted] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const [isTitleFocused, setIsTitleFocused] = useState(false);
+
+  const titleRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        titleRef.current &&
+        !titleRef.current.contains(event.target) &&
+        !descriptionRef.current.contains(event.target) &&
+        !buttonRef.current.contains(event.target)
+      ) {
+        setIsTitleFocused(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,14 +73,24 @@ const TaskForm = () => {
       setCompleted(false);
       setError(null);
       setLoading(false);
+      setIsTitleFocused(false);
       dispatch({ type: "ADD_TASK", payload: data });
     }
   };
 
+  const handleTitleFocus = () => {
+    setIsTitleFocused(true);
+  };
+
+  const handleDescriptionFocus = () => {
+    setIsTitleFocused(true);
+  };
+
   const handleError = () => {
-    setTimeout(() => {
+    const time = setTimeout(() => {
       setError(null);
     }, 3000);
+    return () => clearTimeout(time);
   };
 
   const resizeTextArea = () => {
@@ -66,31 +100,37 @@ const TaskForm = () => {
   };
 
   return (
-    <form className="create" onSubmit={handleSubmit}>
-      <h2>Create New Task</h2>
-      {error && (
-        <p className="error" onClick={() => handleError}>
-          {error}
-        </p>
-      )}
+    <form
+      className={`create ${isTitleFocused ? "title-focused" : ""}`}
+      onSubmit={handleSubmit}
+    >
       <input
+        ref={titleRef}
         type="text"
         id="title"
         value={title}
-        placeholder="Title"
+        placeholder="Add task here.."
         onChange={(e) => setTitle(e.target.value)}
+        onFocus={handleTitleFocus}
       />
       <textarea
+        ref={descriptionRef}
         id="description"
-        rows="3"
+        rows="2"
         value={description}
         placeholder="Description"
         onChange={(e) => setDescription(e.target.value)}
+        onFocus={handleDescriptionFocus}
         onInput={resizeTextArea}
       />
-      <button disabled={loading} className="button">
+      <button ref={buttonRef} disabled={loading} className="button">
         {loading ? "Creating Task..." : "Create Task"}
       </button>
+      {error && (
+        <p className="error" onClick={handleError}>
+          {error}
+        </p>
+      )}
     </form>
   );
 };

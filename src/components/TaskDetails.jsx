@@ -2,7 +2,7 @@
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useTaskContext } from "../hooks/useTaskContext";
 
-import BASE_URL from "../../apiConfig";
+import BASE_URL from "./../server/api/apiConfig";
 
 import { useEffect, useState } from "react";
 
@@ -37,16 +37,13 @@ const TaskDetails = ({ task }) => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        `${BASE_URL}/api/tasks/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/tasks/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
 
       const data = await response.json();
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
-import BASE_URL from "../../apiConfig";
+import BASE_URL from "./../server/api/apiConfig";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);

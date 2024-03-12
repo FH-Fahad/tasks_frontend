@@ -1,10 +1,15 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 
+// import { MyComponent } from "./../server/othersInfo/userInfo";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, error, loading } = useLogin();
+
+  // const result = MyComponent();
+  // console.log(result);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -11,7 +11,7 @@ body {
     background: #f1f1f1;
     font-family: "Poppins";
     margin: 0 auto;
-    min-width: 275px;
+    min-width: 330px;
 }
 
 /* custom scroll bar */
@@ -34,7 +34,7 @@ header {
 
 header .container {
     max-width: 1400px;
-    height: 80px;
+    height: 50px;
     margin: 0 auto;
     padding: 10px 20px;
     display: flex;
@@ -58,23 +58,44 @@ header .container nav {
 }
 
 .pages {
-    max-width: 1400px;
-    padding: 20px;
+    max-width: 1280px;
     margin: 0 auto;
 }
 
 .home {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center; */
     font-size: 16px;
+}
+
+.task-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
 }
 
 .create {
     display: flex;
     flex-direction: column;
-    align-items: left;
-    margin-top: 20px;
-    margin-left: 40px;
+    align-items: center;
+    width: 500px;
+}
+
+/* .create input[type="text"], */
+.create textarea,
+.create button {
+    display: none;
+    /* Initially hide input, textarea, and button */
+}
+
+.create.title-focused input[type="text"],
+.create.title-focused textarea,
+.create.title-focused button {
+    display: block;
 }
 
 .done {
@@ -91,8 +112,8 @@ header .container nav {
 .task-details {
     background: #fff;
     border-radius: 4px;
-    margin: 20px 20px;
-    padding:10px;
+    margin: 20px 10px;
+    padding: 10px;
     position: relative;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
 }
@@ -123,7 +144,7 @@ header .container nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
+    margin: 10px;
 }
 
 .task-details span {
@@ -159,15 +180,16 @@ textarea::placeholder {
 
 textarea {
     min-width: none;
-    min-height: 100px;
+    min-height: 50px;
     resize: none;
     overflow-y: auto;
+    margin-bottom: 10px;
 }
 
 input,
 textarea {
     padding: 10px;
-    margin-top: 10px;
+    margin: 10px 0;
     width: 100%;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -182,7 +204,6 @@ button {
     border-radius: 4px;
     cursor: pointer;
     width: auto;
-    margin-top: 10px;
 }
 
 form button {
@@ -206,13 +227,11 @@ form button {
 }
 
 .error {
-    padding: 10px;
+    padding: 5px;
     background: #ffefef;
     border: 1px solid var(--error);
     color: var(--error);
     border-radius: 4px;
-    padding-top: 10px;
-    margin: 20px 0;
 }
 
 input.error {
@@ -267,28 +286,10 @@ form h2 {
     color: var(--primary);
 }
 
-@media (max-width: 800px) {
-    .pages {
-        padding: 5px;
-    }
-
-    .create {
-        margin-left: 20px;
-    }
-
-}
-
 @media (max-width: 575px) {
-    .home {
-        margin: 20px;
-        display: flex;
-        flex-direction: column;
-    }
-
     .create {
-        margin: 0 auto;
-        width: 80%;
-        margin-bottom: 30px;
+        margin: 10px 10px;
+        width: 200%;
     }
 
     .task-details {
@@ -296,12 +297,8 @@ form h2 {
     }
 }
 
-@media (max-width: 424px) {
-    .home {
-        margin: 10px;
-    }
-
+@media (max-width: 450px) {
     .create {
-        width: 95%;
+        width: 150%;
     }
 }

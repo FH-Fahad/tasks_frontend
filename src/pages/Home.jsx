@@ -5,7 +5,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import TaskDetails from "../components/TaskDetails";
 import TaskForm from "../components/TaskForm";
 
-import BASE_URL from "../../apiConfig";
+import BASE_URL from "./../server/api/apiConfig";
 
 const Home = () => {
   const { user } = useAuthContext();
@@ -40,7 +40,9 @@ const Home = () => {
 
   return (
     <div className="home pages">
-      <TaskForm />
+      <div className="task-form">
+        <TaskForm />
+      </div>
       <div className="tasks">
         {loading && <p className="empty">Loading...</p>}
         {!loading && tasks && tasks.length === 0 && (
