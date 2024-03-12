@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
+import { Reorder } from "framer-motion";
+
 // eslint-disable-next-line react/prop-types
 const TaskDetails = ({ task }) => {
   const parsedDescription = JSON.parse(task.description);
@@ -93,33 +95,35 @@ const TaskDetails = ({ task }) => {
   };
 
   return (
-    <div className="task-details">
-      <h2 className={task.completed ? "done" : ""}>{task.title}</h2>
-      <span>{timeAgo}</span>
-      <div className="description">
-        {descriptionLines.map((line, index) => (
-          <p key={index}>{line}</p>
-        ))}
-      </div>
-      <div className="align">
-        <button
-          className={`completebutton ${task.completed ? "" : "deletebutton"}`}
-          onClick={() => handleComplete(task._id)}
-        >
-          {task.completed ? "Completed" : " Not Complete Yet"}
-        </button>
-
-        {user && (
+    <Reorder.Item value={task} key={task}>
+      <div className="task-details">
+        <h2 className={task.completed ? "done" : ""}>{task.title}</h2>
+        <span>{timeAgo}</span>
+        <div className="description">
+          {descriptionLines.map((line, index) => (
+            <p key={index}>{line}</p>
+          ))}
+        </div>
+        <div className="align">
           <button
-            disabled={loading}
-            className="deletebutton"
-            onClick={() => handleDelete(task._id)}
+            className={`completebutton ${task.completed ? "" : "deletebutton"}`}
+            onClick={() => handleComplete(task._id)}
           >
-            {loading ? "Deleting..." : "Delete"}
+            {task.completed ? "Completed" : " Not Complete Yet"}
           </button>
-        )}
+
+          {user && (
+            <button
+              disabled={loading}
+              className="deletebutton"
+              onClick={() => handleDelete(task._id)}
+            >
+              {loading ? "Deleting..." : "Delete"}
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+    </Reorder.Item>
   );
 };
 

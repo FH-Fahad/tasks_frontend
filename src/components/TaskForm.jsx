@@ -116,7 +116,7 @@ const TaskForm = () => {
       <textarea
         ref={descriptionRef}
         id="description"
-        rows="2"
+        rows="3"
         value={description}
         placeholder="Description"
         onChange={(e) => setDescription(e.target.value)}

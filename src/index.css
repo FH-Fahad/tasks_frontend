@@ -11,7 +11,7 @@ body {
     background: #f1f1f1;
     font-family: "Poppins";
     margin: 0 auto;
-    min-width: 330px;
+    min-width: 320px;
 }
 
 /* custom scroll bar */
@@ -109,10 +109,27 @@ header .container nav {
     color: var(--primary)
 }
 
+.tasks {
+    /* display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); */
+
+    cursor: grab;
+
+    /*  display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; */
+}
+
+.tasks>* {
+    display: block;
+}
+
 .task-details {
     background: #fff;
     border-radius: 4px;
-    margin: 20px 10px;
+    margin: 20px 30px 10px -10px;
     padding: 10px;
     position: relative;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
@@ -180,7 +197,7 @@ textarea::placeholder {
 
 textarea {
     min-width: none;
-    min-height: 50px;
+    min-height: 80px;
     resize: none;
     overflow-y: auto;
     margin-bottom: 10px;
@@ -286,19 +303,20 @@ form h2 {
     color: var(--primary);
 }
 
-@media (max-width: 575px) {
+@media (max-width: 580px) {
     .create {
-        margin: 10px 10px;
-        width: 200%;
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 90%;
     }
 
     .task-details {
-        margin: 10px;
+        margin: 20px 30px 10px -10px;
     }
 }
 
 @media (max-width: 450px) {
     .create {
-        width: 150%;
+        width: 80%;
     }
 }

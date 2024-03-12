@@ -7,6 +7,8 @@ import TaskForm from "../components/TaskForm";
 
 import BASE_URL from "./../server/api/apiConfig";
 
+import { Reorder } from "framer-motion";
+
 const Home = () => {
   const { user } = useAuthContext();
   const { tasks, dispatch } = useTaskContext();
@@ -43,15 +45,22 @@ const Home = () => {
       <div className="task-form">
         <TaskForm />
       </div>
-      <div className="tasks">
-        {loading && <p className="empty">Loading...</p>}
-        {!loading && tasks && tasks.length === 0 && (
-          <p className="empty">No tasks yet!</p>
-        )}
-        {!loading &&
-          tasks &&
-          tasks.map((task) => <TaskDetails key={task._id} task={task} />)}
-      </div>
+      <Reorder.Group
+        values={tasks}
+        onReorder={(newTasks) => {
+          dispatch({ type: "SET_TASKS", payload: newTasks });
+        }}
+      >
+        <div className="tasks">
+          {loading && <p className="empty">Loading...</p>}
+          {!loading && tasks && tasks.length === 0 && (
+            <p className="empty">No tasks yet!</p>
+          )}
+          {!loading &&
+            tasks &&
+            tasks.map((task) => <TaskDetails key={task._id} task={task} />)}
+        </div>
+      </Reorder.Group>
     </div>
   );
 };
