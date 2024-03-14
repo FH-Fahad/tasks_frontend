@@ -232,13 +232,13 @@ form button {
     background: var(--primary);
 }
 
-.completebutton {
+.completeButton {
     background: var(--primary);
     padding: 5px;
     margin-top: 5px;
 }
 
-.deletebutton {
+.deleteButton {
     background: var(--error);
     padding: 5px;
 }

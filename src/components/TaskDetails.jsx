@@ -106,7 +106,7 @@ const TaskDetails = ({ task }) => {
         </div>
         <div className="align">
           <button
-            className={`completebutton ${task.completed ? "" : "deletebutton"}`}
+            className={`completeButton ${task.completed ? "" : "deleteButton"}`}
             onClick={() => handleComplete(task._id)}
           >
             {task.completed ? "Completed" : " Not Complete Yet"}
@@ -115,7 +115,7 @@ const TaskDetails = ({ task }) => {
           {user && (
             <button
               disabled={loading}
-              className="deletebutton"
+              className="deleteButton"
               onClick={() => handleDelete(task._id)}
             >
               {loading ? "Deleting..." : "Delete"}
